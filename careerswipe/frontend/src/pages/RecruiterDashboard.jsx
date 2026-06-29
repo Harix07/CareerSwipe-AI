@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, API_URL } from '../context/AuthContext';
 import {
   PlusCircle, Briefcase, Users, FileText, CheckCircle2, ChevronRight, MapPin,
   DollarSign, Sparkles, Send, ExternalLink, RefreshCw, AlertCircle, Award
 } from 'lucide-react';
 
-const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
 
 export default function RecruiterDashboard({ onNavigate }) {
   const { user, logout } = useAuth();
