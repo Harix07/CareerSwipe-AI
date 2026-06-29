@@ -495,10 +495,10 @@ export default function RecruiterDashboard({ onNavigate }) {
                         : 'bg-slate-950/40 hover:bg-slate-900/60'
                         }`}
                     >
-                      <div>
+                      <div className="flex flex-col gap-1">
                         <h4 className="font-bold text-sm text-white">{app.applicant.name}</h4>
-                        <span className="text-[11px] text-slate-400 block mb-1">Applied: {app.job.title}</span>
-                        <span className="text-[10px] text-slate-500 block">Date: {new Date(app.applied_at).toLocaleDateString()}</span>
+                        <span className="text-[11px] text-slate-400">Applied: {app.job.title}</span>
+                        <span className="text-[10px] text-slate-500">Date: {new Date(app.applied_at).toLocaleDateString()}</span>
                       </div>
 
                       <div className="flex flex-col items-end gap-1.5">
