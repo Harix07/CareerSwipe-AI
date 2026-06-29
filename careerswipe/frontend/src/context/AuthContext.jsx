@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
+const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('careerswipe_token') || null);
@@ -33,7 +35,7 @@ export function AuthProvider({ children }) {
       if (res.ok) {
         const data = await res.json();
         setUser(data);
-        
+
         // If seeker, try loading current resume analysis
         if (data.role === 'seeker') {
           await fetchCurrentResume();
@@ -76,7 +78,7 @@ export function AuthProvider({ children }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
-      
+
       return { success: true };
     } catch (err) {
       return { success: false, message: err.message };
@@ -94,7 +96,7 @@ export function AuthProvider({ children }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
-      
+
       setToken(data.token);
       return { success: true };
     } catch (err) {
@@ -122,7 +124,7 @@ export function AuthProvider({ children }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Upload failed');
-      
+
       setResumeData({
         raw_text: resumeText,
         analysis: data.analysis
