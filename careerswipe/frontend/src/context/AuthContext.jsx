@@ -29,7 +29,8 @@ export function AuthProvider({ children }) {
       setResumeData(null); // Reset old resume data to prevent cross-user leakage
       const res = await fetch(`${API_URL}/auth/me`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -55,7 +56,8 @@ export function AuthProvider({ children }) {
     try {
       const res = await fetch(`${API_URL}/resumes/current`, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -72,7 +74,8 @@ export function AuthProvider({ children }) {
       const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ full_name: name, email, password, role })
       });
@@ -90,7 +93,8 @@ export function AuthProvider({ children }) {
       const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ email, password })
       });
@@ -118,7 +122,8 @@ export function AuthProvider({ children }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ resumeText })
       });
@@ -144,7 +149,8 @@ export function AuthProvider({ children }) {
       const res = await fetch(`${API_URL}/resumes/upload-file`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: formData
       });

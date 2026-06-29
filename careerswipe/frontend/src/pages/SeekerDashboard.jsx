@@ -59,7 +59,8 @@ export default function SeekerDashboard({ onNavigate }) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'ngrok-skip-browser-warning': 'true'
           },
           body: JSON.stringify({ application_id: appId })
         });
@@ -92,7 +93,8 @@ export default function SeekerDashboard({ onNavigate }) {
     try {
       const res = await fetch(`${API_URL}/jobs/swipe-feed`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -115,7 +117,8 @@ export default function SeekerDashboard({ onNavigate }) {
     try {
       const res = await fetch(`${API_URL}/jobs/applications`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -213,7 +216,8 @@ export default function SeekerDashboard({ onNavigate }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ job_id: jobId, direction })
       });

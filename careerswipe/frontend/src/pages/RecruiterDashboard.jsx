@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth, API_URL } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import {
   PlusCircle, Briefcase, Users, FileText, CheckCircle2, ChevronRight, MapPin,
   DollarSign, Sparkles, Send, ExternalLink, RefreshCw, AlertCircle, Award
 } from 'lucide-react';
+
+const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
 
 export default function RecruiterDashboard({ onNavigate }) {
   const { user, logout } = useAuth();
@@ -32,7 +34,8 @@ export default function RecruiterDashboard({ onNavigate }) {
     try {
       const res = await fetch(`${API_URL}/recruiter/jobs`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -48,7 +51,8 @@ export default function RecruiterDashboard({ onNavigate }) {
     try {
       const res = await fetch(`${API_URL}/recruiter/applicants`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         }
       });
       if (res.ok) {
@@ -81,7 +85,8 @@ export default function RecruiterDashboard({ onNavigate }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({
           title,
@@ -126,7 +131,8 @@ export default function RecruiterDashboard({ onNavigate }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
+          'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ application_id: appId, status: newStatus })
       });
@@ -486,8 +492,8 @@ export default function RecruiterDashboard({ onNavigate }) {
                       key={app.application_id}
                       onClick={() => setSelectedApplicant(app)}
                       className={`p-4 rounded-xl border border-slate-850 cursor-pointer transition-all flex justify-between items-center ${selectedApplicant?.application_id === app.application_id
-                          ? 'bg-purple-500/10 border-purple-500'
-                          : 'bg-slate-950/40 hover:bg-slate-900/60'
+                        ? 'bg-purple-500/10 border-purple-500'
+                        : 'bg-slate-950/40 hover:bg-slate-900/60'
                         }`}
                     >
                       <div>
