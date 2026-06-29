@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, API_URL } from '../context/AuthContext';
 import {
   Sparkles, FileText, LayoutGrid, CheckCircle, AlertTriangle, ListChecks,
   MapPin, DollarSign, Award, Download, UploadCloud, Heart, X, CheckCircle2, ChevronRight, BarChart3, AlertCircle,
@@ -55,7 +55,7 @@ export default function SeekerDashboard({ onNavigate }) {
     setTimeout(async () => {
       try {
         const token = localStorage.getItem('careerswipe_token');
-        const res = await fetch('/api/jobs/applications/sync', {
+        const res = await fetch(`${API_URL}/jobs/applications/sync`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export default function SeekerDashboard({ onNavigate }) {
     }
     setLoadingJobs(true);
     try {
-      const res = await fetch('/api/jobs/swipe-feed', {
+      const res = await fetch(`${API_URL}/jobs/swipe-feed`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
         }
@@ -113,7 +113,7 @@ export default function SeekerDashboard({ onNavigate }) {
       return;
     }
     try {
-      const res = await fetch('/api/jobs/applications', {
+      const res = await fetch(`${API_URL}/jobs/applications`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
         }
@@ -209,7 +209,7 @@ export default function SeekerDashboard({ onNavigate }) {
 
   const handleSwipe = async (jobId, direction) => {
     try {
-      const res = await fetch('/api/jobs/swipe', {
+      const res = await fetch(`${API_URL}/jobs/swipe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

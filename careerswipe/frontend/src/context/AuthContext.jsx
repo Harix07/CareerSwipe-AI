@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
-const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
+export const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
     try {
       setResumeData(null); // Reset old resume data to prevent cross-user leakage
-      const res = await fetch('/api/auth/me', {
+      const res = await fetch(`${API_URL}/auth/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
 
   const fetchCurrentResume = async () => {
     try {
-      const res = await fetch('/api/resumes/current', {
+      const res = await fetch(`${API_URL}/resumes/current`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
 
   const register = async (name, email, password, role) => {
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -114,7 +114,7 @@ export function AuthProvider({ children }) {
   const uploadResume = async (resumeText) => {
     if (!token) return { success: false, message: "Unauthenticated" };
     try {
-      const res = await fetch('/api/resumes/upload', {
+      const res = await fetch(`${API_URL}/resumes/upload`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export function AuthProvider({ children }) {
       const formData = new FormData();
       formData.append('resumeFile', file);
 
-      const res = await fetch('/api/resumes/upload-file', {
+      const res = await fetch(`${API_URL}/resumes/upload-file`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

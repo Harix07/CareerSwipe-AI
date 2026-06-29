@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, API_URL } from '../context/AuthContext';
 import {
   PlusCircle, Briefcase, Users, FileText, CheckCircle2, ChevronRight, MapPin,
   DollarSign, Sparkles, Send, ExternalLink, RefreshCw, AlertCircle, Award
@@ -30,7 +30,7 @@ export default function RecruiterDashboard({ onNavigate }) {
 
   const loadPostedJobs = async () => {
     try {
-      const res = await fetch('/api/recruiter/jobs', {
+      const res = await fetch(`${API_URL}/recruiter/jobs`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
         }
@@ -46,7 +46,7 @@ export default function RecruiterDashboard({ onNavigate }) {
 
   const loadApplicants = async () => {
     try {
-      const res = await fetch('/api/recruiter/applicants', {
+      const res = await fetch(`${API_URL}/recruiter/applicants`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('careerswipe_token')}`
         }
@@ -77,7 +77,7 @@ export default function RecruiterDashboard({ onNavigate }) {
     }
 
     try {
-      const res = await fetch('/api/recruiter/jobs', {
+      const res = await fetch(`${API_URL}/recruiter/jobs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export default function RecruiterDashboard({ onNavigate }) {
 
   const handleUpdateStatus = async (appId, newStatus) => {
     try {
-      const res = await fetch('/api/recruiter/applicants/status', {
+      const res = await fetch(`${API_URL}/recruiter/applicants/status`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
