@@ -195,7 +195,7 @@ async function fetchHuggingFaceJobs() {
   try {
     console.log("Fetching live job dataset from Hugging Face...");
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 seconds timeout
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 seconds timeout
     
     const response = await fetch("https://datasets-server.huggingface.co/rows?dataset=Yash514311%2Fnexus-jobs&config=default&split=train&offset=0&length=100", { signal: controller.signal });
     clearTimeout(timeoutId);
