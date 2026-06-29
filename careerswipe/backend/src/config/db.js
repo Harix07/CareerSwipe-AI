@@ -366,6 +366,42 @@ async function initDb() {
     )
   `;
 
+  const createFeedbacksTable = `
+    CREATE TABLE IF NOT EXISTS feedbacks (
+      id INTEGER PRIMARY KEY ${dbType === 'pg' ? 'GENERATED ALWAYS AS IDENTITY' : 'AUTOINCREMENT'},
+      author VARCHAR(255) NOT NULL,
+      role VARCHAR(255),
+      company VARCHAR(255),
+      quote TEXT NOT NULL,
+      avatar VARCHAR(10),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+
+  const initialFeedbacks = [
+    {
+      quote: "CareerSwipe totally reinvented my job hunt. The resume analysis gave me clear items to fix. In 2 weeks of right-swiping, I landed three interviews!",
+      author: "Alex Rivers",
+      role: "Senior React Engineer",
+      company: "Stripe",
+      avatar: "AR"
+    },
+    {
+      quote: "As a recruiter, finding candidates who fit our criteria used to take hours of manual filtering. CareerSwipe's ATS alignment matches them automatically.",
+      author: "Sarah Jenkins",
+      role: "Director of Talent Acquisition",
+      company: "Linear",
+      avatar: "SJ"
+    },
+    {
+      quote: "The interface is addictive and efficient. Swiping on matching cards is so much faster than scrolling endless pages of job boards.",
+      author: "Marcus Chen",
+      role: "Machine Learning Graduate",
+      company: "Anthropic",
+      avatar: "MC"
+    }
+  ];
+
   if (dbType === 'pg') {
     try {
       console.log('Dropping old PostgreSQL tables (swipes, applications, jobs) to sync schema...');
@@ -378,6 +414,7 @@ async function initDb() {
       await pgClient.query(createJobsTable);
       await pgClient.query(createSwipesTable);
       await pgClient.query(createApplicationsTable);
+      await pgClient.query(createFeedbacksTable);
       
       console.log('Seeding dataset jobs into PostgreSQL...');
       for (const job of jobsToSeed) {
@@ -388,6 +425,18 @@ async function initDb() {
         );
       }
       console.log(`Inserted ${jobsToSeed.length} dataset jobs into PostgreSQL database.`);
+
+      // Seed feedbacks if empty
+      const fbCheck = await pgClient.query('SELECT COUNT(*) FROM feedbacks');
+      if (parseInt(fbCheck.rows[0].count, 10) === 0) {
+        console.log('Seeding initial testimonials into PostgreSQL...');
+        for (const fb of initialFeedbacks) {
+          await pgClient.query(
+            `INSERT INTO feedbacks (author, role, company, quote, avatar) VALUES ($1, $2, $3, $4, $5)`,
+            [fb.author, fb.role, fb.company, fb.quote, fb.avatar]
+          );
+        }
+      }
     } catch (err) {
       console.error('Error setting up PG database tables:', err.message);
     }
@@ -405,6 +454,7 @@ async function initDb() {
       sqliteDb.run(createJobsTable);
       sqliteDb.run(createSwipesTable);
       sqliteDb.run(createApplicationsTable);
+      sqliteDb.run(createFeedbacksTable);
 
       sqliteDb.run('SELECT 1', (err) => {
         if (err) {
@@ -421,6 +471,23 @@ async function initDb() {
         }
         stmt.finalize();
         console.log(`Inserted ${jobsToSeed.length} dataset jobs into SQLite database.`);
+
+        // Seed feedbacks if empty
+        sqliteDb.get('SELECT COUNT(*) as count FROM feedbacks', (checkErr, row) => {
+          if (checkErr || !row) return;
+          if (row.count === 0) {
+            console.log('Seeding initial testimonials into SQLite...');
+            const fbStmt = sqliteDb.prepare(`
+              INSERT INTO feedbacks (author, role, company, quote, avatar)
+              VALUES (?, ?, ?, ?, ?)
+            `);
+            for (const fb of initialFeedbacks) {
+              fbStmt.run(fb.author, fb.role, fb.company, fb.quote, fb.avatar);
+            }
+            fbStmt.finalize();
+            console.log('Successfully seeded initial testimonials into SQLite.');
+          }
+        });
       });
     });
   }

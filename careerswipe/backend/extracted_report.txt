@@ -1,0 +1,528 @@
+
+
+Test Cases Design
+
+The testing phase is crucial in the software development lifecycle as it allows for the software to be evaluated to determine if it meets the requirements. The aim of testing is to confirm the correctness of parts of the system, the correct communication between the components of the system and the correct functionality of the system under normal and abnormal conditions.
+
+The test cases have been formulated based on the functional requirements which is obtained from Chapter 3. The testing process involved validating the log collection process, AI assisted analysis, automated response workflows, notification services, and case management functionalities.
+
+Table 5.1: Test Cases Designed for Functional Validation of the Intelligent Security Operations Platform
+
+Test Case ID
+
+
+
+Test Scenario
+
+
+
+Expected Result
+
+
+
+Status
+
+
+
+TC-01
+
+Wazuh agent sends logs to manager
+
+Logs should be collected and indexed successfully
+
+Passed
+
+TC-02
+
+Detection of brute force attack simulation
+
+Alert generated with appropriate severity
+
+Passed
+
+TC-03
+
+Natural language query through MCP server
+
+AI provides contextual explanation and results
+
+Passed
+
+TC-04
+
+High severity alert generation
+
+Notification sent to analyst
+
+Passed
+
+TC-05
+
+SOAR workflow execution
+
+Automated workflow executed successfully
+
+Passed
+
+TC-06
+
+Incident creation in DFIR-IRIS
+
+Incident case generated automatically
+
+Passed
+
+TC-07
+
+Unauthorized user access attempt
+
+Access denied through RBAC
+
+Passed
+
+TC-08
+
+Audit log generation
+
+User activity recorded successfully
+
+Passed
+
+
+
+Unit Testing
+
+Individual system components were tested in Unit testing to assess the system components separately from the other modules. This testing was done to confirm the functionality of each component was performed as it was supposed to be. The following testing is done on each of the main components:
+
+Wazuh Agent Module
+
+The Wazuh agent module was tested to make sure it could gather security logs from endpoints and send them to the manager. A variety of event logs are produced, such as authentication, process and system events.
+
+Result: Agents were able to gather and transfer logs without loss of information.
+
+MCP Server Module
+
+The module for the MCP server was tested independently and validated:
+
+Connection with Elasticsearch
+
+Retrieval of alerts
+
+Processing natural language queries:
+
+AI-generated responses
+
+Result: The MCP server is able to return context-aware responses to queries.
+
+SOAR Workflow Module
+
+The following shuffles were tested independently to validate:
+
+Trigger generation
+
+External API integration
+
+Notification delivery
+
+Case creation
+
+Result: Workflows were run successfully and automated actions were triggered as appropriate.
+
+Notification Module
+
+High severity alerts were created for testing Slack and Discord integration.
+
+Result: Successful delivery of notifications, including appropriate incident information.
+
+Integration Testing
+
+Following unit testing, integration testing was carried out to verify the effective communication and correct exchange of information between modules. The following integrations were tested:
+
+Integration between Wazuh and Elasticsearch
+
+Wazuh was responsible for collecting the security logs at endpoints and sending them to Elasticsearch for indexing and storage.
+
+Result: All logs were successfully indexed and real-time dashboards were created.
+
+Integration between Elasticsearch and MCP Server
+
+MCP server was integrated with Elasticsearch APIs to fetch alerts data and agent information.
+
+Result: Data retrieved for alert information and metadata was successful.
+
+Integration between Wazuh and SOAR Platform
+
+Through webhook communication, critical alerts raised by Wazuh have activated SOAR workflows.
+
+Result: SOAR Playbooks implemented effectively.
+
+Integration between SOAR and DFIR-IRIS
+
+If high severity alerts arise, they were automatically created as incidents in DFIR-IRIS through the SOAR platform.
+
+Result: All alert information and evidence was used to create incident cases.
+
+Integration between SOAR and Notification Services
+
+Discord and Slack were added as notification channels to alert in real-time.
+
+Result: Deliveries of notifications without delay were made.
+
+User Acceptance Testing
+
+For the developed system, User Acceptance Testing (UAT) was carried out to ensure that the system is acceptable by the users and fulfills project goals. The testing of the platform included assessing the platform from the point of view of the intended users—such as security analysts and administrators. The following criteria were used:
+
+Security Monitoring Validation
+
+Users determined if dashboards were accurate in displaying security events and useful for providing visualizations.
+
+Feedback: The dashboard was able to give a central view of security events.
+
+AI Assistance Validation
+
+AI generated explanations were assessed for understandability and usefulness by users.
+
+Feedback: The MCP server made clear and context-aware explanations that aided in threat analysis.
+
+Automated Response Validation
+
+Users looked at the impact of automated workflows on the amount of manual work required to manage incidents.
+
+Feedback: Repeated tasks were greatly minimized and efficiency was enhanced with automation.
+
+System Usability Validation
+
+The interface was analyzed for ease of use and accessibility by the users.
+
+Feedback: The system’s interface was user-friendly and easy to use.
+
+The platform introduced, overall, fulfilled the acceptance criteria and met the objectives that were identified in requirement analysis.
+
+Implementation
+
+Work Breakdown Structure (WBS)
+
+A Work Breakdown Structure (WBS) has been created to break the project down into smaller tasks and activities to facilitate effective planning and execution. The project was broken down into a series of phases.
+
+Phase 1: Requirement Analysis and Research
+
+Activities:
+
+Literature review
+
+Existing solution analysis
+
+Requirement gathering
+
+Project planning
+
+Phase 2: Environment Setup
+
+Activities:
+
+Installation of Ubuntu server
+
+Installation of Wazuh stack.
+
+Configuration of Elasticsearch
+
+Kibana dashboards configuration
+
+Phase 3: MCP Server Development
+
+Activities:
+
+Designing API architecture
+
+Developing MCP server
+
+Integrating with LLM APIs.
+
+Developing web interface
+
+Phase 4: SOAR Integration
+
+Activities:
+
+Installation of Shuffle/n8n
+
+Workflow creation
+
+DFIR-IRIS integration
+
+Notification configuration
+
+Phase 5: Testing and Evaluation
+
+Activities:
+
+Unit testing
+
+Integration testing
+
+Performance testing
+
+User acceptance testing
+
+Phase 6: Documentation
+
+Activities:
+
+Report writing
+
+Diagram creation
+
+Final presentation preparation
+
+Team Roles and Responsibilities
+
+The project was developed collaboratively, and responsibilities were distributed among team members.
+
+Table 6.1: Team Member Activities
+
+Team Member
+
+
+
+Activities
+
+
+
+Arfan Abid
+
+Wazuh installation and configuration, ELK stack integration, dashboard development, testing
+
+Muhammad Yasir
+
+MCP server development, web application development, SOAR integration, API development
+
+
+
+Joint responsibilities:
+
+Literature review 
+
+Documentation 
+
+Testing and evaluation 
+
+Final presentation preparation
+
+Tools and Technologies
+
+Table 6.2: Tools and Technologies Used in Project
+
+Component
+
+
+
+Technology
+
+
+
+SIEM Platform
+
+Wazuh
+
+Search and Storage Engine
+
+Elasticsearch
+
+Visualization Dashboard
+
+Kibana
+
+SOAR Platform
+
+n8n
+
+Incident Response Platform
+
+DFIR-IRIS
+
+AI Component
+
+Large Language Models
+
+Middleware
+
+MCP Server
+
+Programming Language
+
+Python
+
+Frontend
+
+Next.js
+
+Backend APIs
+
+FastAPI
+
+Operating System
+
+Ubuntu Server
+
+Cloud Platform
+
+Contabo
+
+Database
+
+Elasticsearch Index
+
+
+
+Implementation Details
+
+The proposed system was implemented in the modular fashion.
+
+Initially, agents for endpoint systems like Linux and Windows machines were added to Wazuh. The agents were constantly tracking system activity and logging authentication activity, process activity, file integrity monitoring, and network activity.
+
+Collected Logs were sent to Wazuh manager for normalization and correlation. Processed events were then passed to Elasticsearch to index and store the events.
+
+Kibana dashboards were set up to provide visualization for:
+
+Active agents
+
+Security alerts
+
+Threat severity
+
+Authentication activities
+
+System health metrics
+
+The MCP server was developed using Python and FastAPI. It gets alert data and agent information from Elasticsearch APIs based on a user query and sends them back to the user.
+
+The MCP server is an intermediate layer between SIEM data and AI models. It provides a framework for security information and provides the LLM with context input for analysis.
+
+SOAR functionality was achieved with the help of Shuffle/n8n workflows. The following workflows were set up to:
+
+Receive alerts
+
+Carry out IP reputation checks.
+
+Trigger automated notifications
+
+Make incident cases in DFIR-IRIS
+
+Perform predetermined response actions.
+
+All the system was placed within a virtual environment to mimic an actual SOC design.
+
+Screenshots of Prototype/System
+
+
+
+Figure 6.1: Wazuh Dashboard showing active agents and security alerts.
+
+
+
+Figure 6.2: Kibana dashboard displaying threat visualization and analytics.
+
+
+
+Figure 6.3: MCP Server web application home page
+
+
+
+Figure 6.4: Core SOAR pipeline for automated alert triage and incident response
+
+
+
+Figure 6.5: AI-powered alert enrichment workflow for automated SOC analysis and incident reporting
+
+
+
+Figure 6.6: Automated brute force detection and response playbook for real-time attack identification and escalation
+
+
+
+Figure 6.7: Privilege escalation detection playbook for automated identification and escalation of suspicious activity
+
+
+
+Figure 6.8: Incident case generated in DFIR-IRIS
+
+Challenges During Implementation
+
+There were a number of implementation issues:
+
+Integration Complexity
+
+There was a need for various independent tools to communicate with one another, such as Wazuh, Elasticsearch, MCP server, Shuffle/n8n and DFIR-IRIS. API management and compatibility was a challenge and needed a lot of work.
+
+Performance Limitations
+
+When dealing with high volumes of security events, the indexing process and AI response times could be impacted under certain hardware constraints.
+
+AI Context Handling
+
+Efficient extraction of the context information from SIEM data was necessary to generate accurate AI responses.
+
+False Positives
+
+Unnecessary alerts were initially generated by security rules and needed to be tuned and optimized.
+
+Resource Constraints
+
+Many security components were needed to run together, and this needed significant CPU and memory resources.
+
+
+
+Conclusions
+
+
+
+Summary
+
+With the emergence of advanced and evolving cyber threats, and complexity of modern system infrastructure, intelligent and automated security solutions are needed. The traditional security mechanisms are not enough to handle huge security data in order to respond in time to attacks.
+
+ The project envisioned and designed an Intelligent Security Operations Platform, to be used for Automated Threat Detection and Response, with open-source technologies and Artificial Intelligence capabilities. 
+
+The proposed platform would combine Wazuh SIEM with the AI-powered MCP server and SOAR technologies, offering centralized monitoring, intelligent contextual analysis, and natural language interaction and automated response. 
+
+The developed solution tackled the following limitations in the existing solutions:
+
+Collecting and monitoring logs in a centralized manner
+
+Intelligent Contextual Threat Assessment (ICTA) 
+
+Natural language interaction 
+
+Automated incident response workflows
+
+Incident Management & Notifications 
+
+Cost-effective open-source implementation
+
+The designed solution proved effective in showcasing the capabilities of AI and automation to enhance analyst productivity, mitigate alert fatigue, and minimize incident response time.
+
+Recommendations for Future Work
+
+The proposed platform successfully accomplished the goals of the project, but there are some future enhancements to be made.
+
+Future enhancements include:
+
+Advanced machine learning models for anomaly detection integrated
+
+Implementing more endpoint detection and response (EDR) solution
+
+Integrations with other threat intelligence sources
+
+Enforcement of predictive threat analytics functionality
+
+Endpoints isolated during containment actions
+
+Support for multi-cloud environment
+
+Improving AI performance with Retrieval Augmented Generation (RAG)
+
+Building mobile apps for live alert monitoring
+
+Enhancement of dashboard visualization & reporting capabilities
+
+
+

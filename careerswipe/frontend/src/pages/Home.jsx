@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles, CheckCircle2, ChevronDown, Award, Briefcase, Zap, Shield, MessageSquare } from 'lucide-react';
 import ParticleBackground from '../components/ParticleBackground';
+import { API_URL } from '../context/AuthContext';
 
 export default function Home({ onNavigate }) {
   const [activeFaq, setActiveFaq] = useState(null);
@@ -34,7 +35,29 @@ export default function Home({ onNavigate }) {
   const [newCompany, setNewCompany] = useState('');
   const [newQuote, setNewQuote] = useState('');
 
-  const handleAddFeedback = (e) => {
+  useEffect(() => {
+    fetchFeedbacks();
+  }, []);
+
+  const fetchFeedbacks = async () => {
+    try {
+      const res = await fetch(`${API_URL}/feedback`, {
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          setCustomTestimonials(data);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load feedbacks:", err);
+    }
+  };
+
+  const handleAddFeedback = async (e) => {
     e.preventDefault();
     if (!newName.trim() || !newQuote.trim()) return;
     const initials = newName.trim().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'CS';
@@ -45,11 +68,28 @@ export default function Home({ onNavigate }) {
       company: newCompany || 'Tech Corp',
       avatar: initials
     };
-    setCustomTestimonials([...customTestimonials, newFeedback]);
-    setNewName('');
-    setNewRole('');
-    setNewCompany('');
-    setNewQuote('');
+
+    try {
+      const res = await fetch(`${API_URL}/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
+        body: JSON.stringify(newFeedback)
+      });
+      if (res.ok) {
+        fetchFeedbacks();
+        setNewName('');
+        setNewRole('');
+        setNewCompany('');
+        setNewQuote('');
+      } else {
+        console.error("Failed to save feedback");
+      }
+    } catch (err) {
+      console.error("Failed to add feedback:", err);
+    }
   };
 
   const faqs = [
