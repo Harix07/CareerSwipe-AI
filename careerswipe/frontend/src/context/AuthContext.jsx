@@ -2,7 +2,9 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
-export const API_URL = "https://barcode-ointment-pulsate.ngrok-free.dev/api";
+export const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000/api'
+  : '/api';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
