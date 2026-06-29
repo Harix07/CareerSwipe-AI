@@ -530,15 +530,15 @@ export default function RecruiterDashboard({ onNavigate }) {
                 {/* Relational Stats cards */}
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-900">
-                    <span className="text-[10px] text-slate-400 block mb-1">JOB ACCURACY</span>
+                    <span className="text-[10px] text-slate-400 block mb-1">JOB ACCURACY &nbsp;</span>
                     <span className="font-display font-extrabold text-base text-cyan-400">{selectedApplicant.applicant.compatibility}%</span>
                   </div>
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-900">
-                    <span className="text-[10px] text-slate-400 block mb-1">ATS INDEX</span>
+                    <span className="text-[10px] text-slate-400 block mb-1">ATS INDEX &nbsp;</span>
                     <span className="font-display font-extrabold text-base text-purple-400">{selectedApplicant.applicant.ats_score}%</span>
                   </div>
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-900">
-                    <span className="text-[10px] text-slate-400 block mb-1">CLARITY SCORE</span>
+                    <span className="text-[10px] text-slate-400 block mb-1">CLARITY SCORE &nbsp;</span>
                     <span className="font-display font-extrabold text-base text-emerald-400">{selectedApplicant.applicant.analysis?.clarity_score || 70}%</span>
                   </div>
                 </div>
